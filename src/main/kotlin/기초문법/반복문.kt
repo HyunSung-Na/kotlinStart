@@ -1,3 +1,5 @@
+import 객체지향.TestClass4
+
 fun main() {
     val a1 = 1..10
 
@@ -41,4 +43,6 @@ fun main() {
         println("a5 : $a5")
         a5++
     } while (a5 < 10)
+
+    val obj = TestClass4(100)
 }
