@@ -1,10 +1,15 @@
 package 코틀린인액션
 
 import 코틀린인액션.Color.*
+import java.lang.IllegalArgumentException
 
 fun main() {
 
 }
+
+interface Expr
+class Num(val value: Int): Expr
+class Sum(val left: Expr, val right: Expr): Expr
 
 class KotlinWhen {
 
@@ -17,6 +22,30 @@ class KotlinWhen {
             GREEN -> "Gave"
             INDIGO -> "In"
             VIOLET -> "Vain"
+        }
+
+    fun eval(e: Expr): Int =
+        when(e) {
+            is Num -> e.value
+            is Sum -> eval(e.right) + eval(e.left)
+            else ->
+                throw IllegalArgumentException("Unknown expression")
+        }
+
+    fun evalWithLogging(e: Expr): Int =
+        when (e) {
+            is Num -> {
+                println("num: ${e.value}")
+                e.value
+            }
+
+            is Sum -> {
+                val left = evalWithLogging(e.left)
+                val right = evalWithLogging(e.right)
+                println("sum : $left + $right")
+                left + right
+            }
+            else -> throw IllegalArgumentException("Unknown expression")
         }
 }
 
